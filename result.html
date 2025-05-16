@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Static HTML + JSON</title>
+</head>
+<body>
+  <h1>User Profile</h1>
+  <p id="info">Loading...</p>
+  <ul id="skills"></ul>
+
+  <script>
+    fetch('/result')
+      .then(response => response.json())
+      .then(data => console.log(data));
+  </script>
+</body>
+</html>

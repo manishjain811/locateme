@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fetch and Send Location</title>
+</head>
+<body>
+  <h1>Fetch IP Location and Save to Server</h1>
+  <p id="status"></p>
+
+  <script>
+  fetchAndSendLocation();
+    async function fetchAndSendLocation() {
+      const status = document.getElementById('status');
+      status.textContent = 'Fetching location...';
+
+      try {
+        const response = await fetch('https://ipinfo.io/json');
+        const data = await response.json();
+
+        // Replace this with your actual backend endpoint
+        const saveUrl = '/save'; 
+
+        fetch(saveUrl, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ data })
+		})
+		
+		.then(res => data)
+		.then(data => console.log(data))
+		.catch(err => console.error('Error:', err));
+
+		} catch (error) {
+			status.textContent = 'Error: ' + error.textData;
+		}
+    }
+  </script>
+</body>
+</html>
