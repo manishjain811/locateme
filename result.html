@@ -66,6 +66,7 @@
         <th>City</th>
         <th>Region</th>
         <th>Location</th>
+		<th>TimeStamp (IST)</th>
       </tr>
     </thead>
     <tbody>
@@ -100,12 +101,16 @@
           link.textContent = 'View on Map';
           link.target = "_blank"; 
           locationCell.appendChild(link);
+		  
+		  const timeStampCell = document.createElement('td');
+          timeStampCell.textContent = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
           row.appendChild(sNoCell);
           row.appendChild(ipCell);
           row.appendChild(cityCell);
           row.appendChild(regionCell);
           row.appendChild(locationCell);
+		  row.appendChild(timeStampCell);
 
           userprofile.appendChild(row);
         });
