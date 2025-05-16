@@ -46,5 +46,16 @@ app.post('/save', (req, res) => {
   });
 });
 
+app.get('/result', (req, res) => {
+  const filePath = path.join(__dirname, 'test.json');
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) return res.status(500).send('Error reading file');
+    res.json(JSON.parse(data));
+  });
+});
 
 
+// Start server
+app.listen(3000, () => {
+  console.log('Server running at http://localhost:3000');
+});

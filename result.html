@@ -5,13 +5,70 @@
 </head>
 <body>
   <h1>User Profile</h1>
-  <p id="info">Loading...</p>
-  <ul id="skills"></ul>
+  <div id="messageList"></div>
+
+  <table id="userprofile">
+    <tbody>
+      <tr>
+        <td>S.No.</td>
+        <td>IP</td>
+        <td>City</td>
+        <td>Region</td>
+        <td>Location</td>
+      </tr>
+    </tbody>
+  </table>
 
   <script>
+    // Fetch JSON data and display it
     fetch('/result')
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => {
+        console.log(data);
+        var userprofile = document.querySelector('#userprofile tbody');
+        data.forEach((item, index) => {
+        var row = document.createElement('tr');
+
+        var sNoCell = document.createElement('td');
+        sNoCell.textContent = index+1;
+
+        var ipCell = document.createElement('td');
+        ipCell.textContent = item.data.ip;
+
+        var cityCell = document.createElement('td');
+        cityCell.textContent = item.data.city;
+
+        var regionCell = document.createElement('td');
+        regionCell.textContent = item.data.region;
+
+        var locationCell = document.createElement('td');
+        var link = document.createElement("a");
+        locationCell.appendChild(link);
+        link.href = 'https://www.google.com/maps?q=' + item.data.loc;
+        link.textContent = 'https://www.google.com/maps?q=' + item.data.loc;
+        link.target = "_blank"; 
+        locationCell.appendChild(link);
+
+        row.appendChild(sNoCell);
+        row.appendChild(ipCell);
+        row.appendChild(cityCell);
+        row.appendChild(regionCell);
+        row.appendChild(locationCell);
+
+        userprofile.appendChild(row);
+
+        });
+      })
+      .catch(err => console.error('Error loading data:', err));
   </script>
+
+  <style>
+    td {
+      border: 1px solid;
+      min-width: 150px;
+    }
+  </style>
 </body>
+
+
 </html>
