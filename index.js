@@ -48,8 +48,3 @@ app.post('/save', (req, res) => {
 
 
 
-
-// Start server
-app.listen(3000, () => {
-  console.log('Server running at https://saveloctest.netlify.app:3000');
-});
