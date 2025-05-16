@@ -1,74 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Static HTML + JSON</title>
+  <meta charset="UTF-8">
+  <title>User Profile Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    thead {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    #messageList {
+      margin-bottom: 1.5rem;
+    }
+  </style>
 </head>
 <body>
+
   <h1>User Profile</h1>
   <div id="messageList"></div>
 
   <table id="userprofile">
-    <tbody>
+    <thead>
       <tr>
-        <td>S.No.</td>
-        <td>IP</td>
-        <td>City</td>
-        <td>Region</td>
-        <td>Location</td>
+        <th>S.No.</th>
+        <th>IP</th>
+        <th>City</th>
+        <th>Region</th>
+        <th>Location</th>
       </tr>
+    </thead>
+    <tbody>
+      <!-- Dynamic content goes here -->
     </tbody>
   </table>
 
   <script>
-    // Fetch JSON data and display it
     fetch('/result')
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        var userprofile = document.querySelector('#userprofile tbody');
+        const userprofile = document.querySelector('#userprofile tbody');
         data.forEach((item, index) => {
-        var row = document.createElement('tr');
+          const row = document.createElement('tr');
 
-        var sNoCell = document.createElement('td');
-        sNoCell.textContent = index+1;
+          const sNoCell = document.createElement('td');
+          sNoCell.textContent = index + 1;
 
-        var ipCell = document.createElement('td');
-        ipCell.textContent = item.data.ip;
+          const ipCell = document.createElement('td');
+          ipCell.textContent = item.data.ip;
 
-        var cityCell = document.createElement('td');
-        cityCell.textContent = item.data.city;
+          const cityCell = document.createElement('td');
+          cityCell.textContent = item.data.city;
 
-        var regionCell = document.createElement('td');
-        regionCell.textContent = item.data.region;
+          const regionCell = document.createElement('td');
+          regionCell.textContent = item.data.region;
 
-        var locationCell = document.createElement('td');
-        var link = document.createElement("a");
-        locationCell.appendChild(link);
-        link.href = 'https://www.google.com/maps?q=' + item.data.loc;
-        link.textContent = 'https://www.google.com/maps?q=' + item.data.loc;
-        link.target = "_blank"; 
-        locationCell.appendChild(link);
+          const locationCell = document.createElement('td');
+          const link = document.createElement("a");
+          const mapUrl = 'https://www.google.com/maps?q=' + item.data.loc;
+          link.href = mapUrl;
+          link.textContent = 'View on Map';
+          link.target = "_blank"; 
+          locationCell.appendChild(link);
 
-        row.appendChild(sNoCell);
-        row.appendChild(ipCell);
-        row.appendChild(cityCell);
-        row.appendChild(regionCell);
-        row.appendChild(locationCell);
+          row.appendChild(sNoCell);
+          row.appendChild(ipCell);
+          row.appendChild(cityCell);
+          row.appendChild(regionCell);
+          row.appendChild(locationCell);
 
-        userprofile.appendChild(row);
-
+          userprofile.appendChild(row);
         });
       })
       .catch(err => console.error('Error loading data:', err));
   </script>
 
-  <style>
-    td {
-      border: 1px solid;
-      min-width: 150px;
-    }
-  </style>
 </body>
-
-
 </html>
